@@ -1,0 +1,27 @@
+name: Kit checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Windows / Python ${{ matrix.python }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Unit and installation checks
+        run: python -B -m unittest discover -s tests -v
+      - name: Shipped kit and inert templates
+        run: python -B .agents/skills/spec-team/scripts/validate.py --root . --project .agents/skills/spec-team/templates/project.json --run .agents/skills/spec-team/templates/run.json
