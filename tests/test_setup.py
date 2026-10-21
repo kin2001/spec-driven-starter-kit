@@ -262,6 +262,25 @@ class SetupTests(unittest.TestCase):
                 with self.subTest(name=name):
                     self.assertTrue(m.plan_setup(self.kit, home / name, [])['conflicts'])
 
+    @unittest.skipUnless(os.name == 'nt', 'Windows short-path alias check')
+    def test_short_path_alias_cannot_bypass_protected_home(self):
+        import ctypes
+        m = self.module()
+        home = Path(os.environ.get('ProgramFiles', r'C:\Program Files')).resolve()
+        buffer = ctypes.create_unicode_buffer(32768)
+        if not ctypes.windll.kernel32.GetShortPathNameW(str(home), buffer, len(buffer)):
+            self.skipTest('Windows short-path alias unavailable')
+        alias = Path(buffer.value)
+        if alias == home:
+            self.skipTest('Filesystem does not provide a distinct short-path alias')
+        for home_value, target in ((home, alias / '.codex/skills/target'),
+                                   (alias, home / '.agents/skills/target')):
+            with self.subTest(home=home_value), patch.object(m.Path, 'home', return_value=home_value):
+                plan = m.plan_setup(self.kit, target, [])
+                self.assertTrue(any(c['error'] == 'project_root: protected user storage'
+                                    for c in plan['conflicts']))
+                self.assertFalse(plan['operations'])
+
     def test_runtime_imports_no_network_or_process_module(self):
         import ast
         tree = ast.parse(SCRIPT.read_text())

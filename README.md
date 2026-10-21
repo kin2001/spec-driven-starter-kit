@@ -290,7 +290,7 @@ git diff --check
 
 The JSON files under `templates/` are inert examples, not live approved records. `SPEC_TEAM_VALID` establishes structural consistency; actual ownership, accounts, approvals, review, acceptance and provider checks still require evidence.
 
-Local Windows validation exercised Python 3.11.9 and 3.14.5: each suite ran 52 tests, with 51 passed and one explicit symlink-privilege skip. Actual junction rejection ran. Disposable installs exercised additive setup, rerun, installed-copy bootstrap and private-state preservation. Instruction probes and independent review checked contracts. GitHub Actions runs the shipped suite and template validator; its badge reflects actual hosted outcomes.
+Local Windows validation exercised Python 3.11.9 and 3.14.5: each suite ran 53 tests, with 52 passed and one explicit symlink-privilege skip. Actual junction rejection ran. Disposable installs exercised additive setup, rerun, installed-copy bootstrap and private-state preservation. Instruction probes and independent review checked contracts. GitHub Actions runs the shipped suite and template validator; its badge reflects actual hosted outcomes.
 
 A complete live Linear/product/PR/merge lifecycle, actual role-model enforcement, every host interaction and product-specific security/accessibility/performance acceptance remain separate validation. No ASVS/WCAG certification, guaranteed capacity or measured token savings is claimed. Path/claim checks coordinate cooperating sessions; they do not sandbox unrestricted actors. A hard interruption can require reconciliation even when ordinary copy failures roll back owned changes.
 

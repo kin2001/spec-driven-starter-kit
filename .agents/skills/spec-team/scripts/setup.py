@@ -140,14 +140,18 @@ def plan_setup(kit_root: Path, project_root: Path, skill_roots: list[Path] | Non
     try:
         _check_path(kit)
         _check_path(project)
+        # Canonicalize comparisons only after rejecting redirected input paths.
+        project_key, kit_key = project.resolve(), kit.resolve()
         home = Path.home().resolve()
         global_roots = ('.codex/skills', '.codex/agents', '.codex/plugins', '.codex/memories', '.codex/automations', '.codex/sessions', '.codex/rules', '.codex/logs', '.codex/tmp', '.codex/state', '.codex/visualizations', '.codex/cache', '.agents/skills', '.claude/skills', '.claude/agents', '.claude/plugins', '.claude/projects')
-        if project == home or project in home.parents or project in [home / p for p in ('.codex', '.agents', '.claude')] or any(project == home / p or (home / p) in project.parents for p in global_roots):
+        if project_key == home or project_key in home.parents or project_key in [home / p for p in ('.codex', '.agents', '.claude')] or any(project_key == home / p or (home / p) in project_key.parents for p in global_roots):
             raise ValueError('project_root: protected user storage')
-        if project != kit and (project in kit.parents or kit in project.parents):
+        if project_key != kit_key and (project_key in kit_key.parents or kit_key in project_key.parents):
             raise ValueError('project_root: overlaps source kit')
         for root in roots:
-            if project == root or project in root.parents or root in project.parents:
+            _check_path(root)
+            root_key = root.resolve()
+            if project_key == root_key or project_key in root_key.parents or root_key in project_key.parents:
                 raise ValueError('project_root: overlaps discovery storage')
         skill = kit / SKILL
         field = 'dependencies.lock.json'
