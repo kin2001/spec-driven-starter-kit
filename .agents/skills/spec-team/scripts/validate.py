@@ -11,7 +11,7 @@ import unicodedata
 from urllib.parse import urlsplit
 
 SKILL = Path('.agents/skills/spec-team')
-ROLES = {name: ('gpt-6-luna','max') if name in ('muse','pixel','dock') else ('gpt-6.1-sol',effort) for name,effort in [('spark','high'),('atlas','xhigh'),('relay','high'),('muse','max'),('pixel','max'),('forge','medium'),('lens','xhigh'),('dock','max')]}
+ROLES = {name: ('gpt-6-luna','max') if name in ('muse','pixel','dock') else ('gpt-6.1-sol',effort) for name,effort in [('spark','high'),('atlas','high'),('relay','medium'),('muse','max'),('pixel','max'),('forge','medium'),('lens','high'),('dock','max')]}
 CAPABILITIES = ('native_dispatch','role_selection','model_selection','permission_scoping','linear','git_provider','worktrees')
 STATUSES = ('backlog','ready','in_progress','in_review','awaiting_acceptance','done')
 STATES = ('idea','spec_review','planning','plan_review','setup','implementing','in_review','awaiting_acceptance','merging','cleanup','complete','stopping','stopped','blocked')
@@ -22,7 +22,7 @@ REQUIRED_TEXT = {
  'phase-report.md': ('Case coverage','Project quality evidence','Delivery observations','Environment'),
  'memory.md': ('Project','Purpose and trust boundary','Entries','Finding','Why','Source and revision','Last verified','Recheck when'),
  'linear-issue.md': ('Outcome and purpose','Specification references','Context','Scope and ownership','Dependencies','Implementation checklist','Acceptance criteria','Validation','Documentation','Execution and handoff'),
- 'dispatch.md': (),
+ 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action'),
 }
 
 
@@ -192,9 +192,15 @@ def validate_run(record: dict, controller_root: Path) -> list[str]:
         if state == 'complete' and cleanup.get('status') != 'complete': errors.append('cleanup.status: complete required')
         if cleanup.get('status') == 'complete' and merge.get('status') != 'merged': errors.append('cleanup: unresolved merge cannot authorize completed cleanup')
         for dispatch in p.get('dispatches',[]) if isinstance(p.get('dispatches'),list) else []:
-            d=_object(dispatch,('role','requested_model','requested_effort','observed_model','observed_effort','worker_id','retries','usage'),'dispatch',errors,True)
+            if isinstance(dispatch,dict): dispatch={'escalation':None,**dispatch}
+            d=_object(dispatch,('role','requested_model','requested_effort','observed_model','observed_effort','worker_id','retries','usage','escalation'),'dispatch',errors,True)
+            requested=(d.get('requested_model'),d.get('requested_effort'))
             if not _text(d.get('role')) or d['role'] not in ROLES: errors.append('dispatch.role: unsupported')
-            elif (d.get('requested_model'),d.get('requested_effort')) != ROLES[d['role']]: errors.append('dispatch: requested role model/effort mismatch')
+            elif requested != ROLES[d['role']]:
+                if requested != ('gpt-6.1-sol','xhigh'): errors.append('dispatch: requested role model/effort mismatch')
+                escalation=_object(d.get('escalation'),('reason','scope','evidence'),'dispatch.escalation',errors,True)
+                if any(not _text(escalation.get(key)) for key in ('reason','scope','evidence')):
+                    errors.append('dispatch.escalation: diagnosed reason, scope and evidence required')
             if type(d.get('retries')) is not int or d['retries']<0: errors.append('dispatch.retries: expected nonnegative integer')
     reports=r.get('completed_phase_reports'); report_ids=[]
     if not isinstance(reports,list): errors.append('run.completed_phase_reports: expected list'); reports=[]
@@ -230,7 +236,7 @@ def _json(path, errors, field):
 def validate_kit(root: Path) -> list[str]:
     root=Path(root); errors=[]
     required=['AGENTS.md',str(SKILL/'SKILL.md'),str(SKILL/'agents/openai.yaml'),str(SKILL/'scripts/setup.py'),str(SKILL/'dependencies.lock.json')]
-    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md')]
+    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md')]
     required += [str(SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
     for name in required:
         if not (root/name).is_file(): errors.append(name+': missing required file')

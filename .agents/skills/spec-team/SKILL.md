@@ -26,6 +26,8 @@ No action and `help` are read-only. Show the stage, valid next actions, and any 
 
 ## Load only what this action needs
 
+- Read [context and handoffs](references/context.md) before dispatch, review, or a context refresh; use focused issue workers and safe phase checkpoints, with concise evidence.
+
 - Read [workflow](references/workflow.md) for approval, roles, quality/case policy, phases, memory, change, stop/resume, or handoff.
 - Read [Linear](references/linear.md) before any project, milestone, issue, status, or PR progress write.
 - Read [runtime](references/runtime.md) for bootstrap/setup, host capabilities, permissions, model selection, worktrees, merge, CI, or cleanup.

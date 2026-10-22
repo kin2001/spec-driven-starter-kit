@@ -136,15 +136,27 @@ Relay may keep only non-secret observations in ignored `.spec-team/local/environ
 | Role | Main responsibility | Requested model / effort |
 | --- | --- | --- |
 | Spark | Product discovery, scope, use cases, acceptance criteria | `gpt-6.1-sol` / `high` |
-| Atlas | Architecture, stack, contracts, security approach, technical plan | `gpt-6.1-sol` / `xhigh` |
-| Relay | Single controller; setup, Linear writes, dispatch, status, ownership | `gpt-6.1-sol` / `high` |
+| Atlas | Architecture, stack, contracts, security approach, technical plan | `gpt-6.1-sol` / `high` |
+| Relay | Single controller; setup, Linear writes, dispatch, status, ownership | `gpt-6.1-sol` / `medium` |
 | Muse | UX flows, visual direction, interaction states, accessibility | `gpt-6-luna` / `max` |
 | Pixel | Frontend implementation and focused checks | `gpt-6-luna` / `max` |
 | Forge | Backend, data, permissions, integrations, focused checks | `gpt-6.1-sol` / `medium` |
-| Lens | Independent specification/code review and selected acceptance | `gpt-6.1-sol` / `xhigh` |
+| Lens | Independent specification/code review and selected acceptance | `gpt-6.1-sol` / `high` |
 | Dock | Integration, combined checks, verified merge and local cleanup | `gpt-6-luna` / `max` |
 
 These are exact requested defaults, not proof of observed routing. Check actual host selectors and report observed model/effort separately. Sol Extra high is the ceiling; escalate only for a diagnosed high-risk or difficult issue, record why, and return routine work to its default. Access errors and missing credentials do not justify a model escalation. Never change global model settings or claim an agent profile overrides the parent session.
+
+## Context, communication, and usage
+
+Use a fresh, focused worker context for each meaningful implementation issue and independent Lens review. Keep related tiny steps together and return fixes to their current owner when practical. Relay receives concise results and evidence references rather than raw logs, screenshots or full worker histories. Read relevant skill sections once per context; recheck changed or lost inputs. Workers inspect connected source as needed; a small prompt must not hide a dependency.
+
+Keep Relay through a coherent phase. At a safe phase checkpoint, use the existing phase report and run record to prepare a fresh controller session if needed. Stop dispatches, quiesce workers, reconcile external actions, preserve WIP and transfer the single claim only with owner authorization. The fresh session verifies actual Git/provider/approval evidence before continuing. A new context does not require a new worktree, issue, PR, login or installation. Never reset during an uncertain migration, merge or provider write; reconcile first. Cross-app transfer remains explicit.
+
+Use short structured messages: issue/status; snapshot and changed files; checks/evidence; blockers/unverified risks; next action. Keep exact identifiers, conditions and negation. Do not shorten a security rule or turn “not tested” into “passed.” No additional Caveman skill is required.
+
+These are host-assisted operating instructions, not an automatic session scheduler, token limiter or guarantee of lower usage. Fresh contexts pay startup costs and can lose cache reuse; excessive restarting can cost more. Profile edits apply only when the host loads them; they do not change the current controller's model. Select the requested model/effort in the host for a fresh controller and observe actual routing; never silently substitute an unsupported setting. Use [the context contract and edge/worst cases](.agents/skills/spec-team/references/context.md).
+
+Existing installations are not overwritten by `setup`. For an upgrade, checkpoint the active project first, back up its workflow files, compare custom changes, then deliberately reconcile the skill references/templates/scripts and role profiles together. Preserve approved product documents, current run records, third-party skill pins, local credentials and product code. Start a fresh chat after reconciliation and use `$spec-team resume` with the retained controller root and checkpoint. A live delivery is needed to measure savings; structural tests do not establish model routing or product acceptance.
 
 ## Dependencies and host limits
 

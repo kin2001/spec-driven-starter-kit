@@ -160,7 +160,7 @@ class Guards(unittest.TestCase):
     def kit(self):
         root=self.root/'kit'; root.mkdir()
         files=['AGENTS.md',str(self.v.SKILL/'SKILL.md'),str(self.v.SKILL/'agents/openai.yaml'),str(self.v.SKILL/'scripts/setup.py'),str(self.v.SKILL/'dependencies.lock.json')]
-        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md')]
+        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md')]
         files += [str(self.v.SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
         for filename in files:
             path=root/filename; path.parent.mkdir(parents=True,exist_ok=True); path.write_text('fixture')
@@ -204,6 +204,23 @@ class Guards(unittest.TestCase):
         root=self.kit(); self.assertEqual([],self.v.validate_kit(root))
         p=json.loads((root/self.v.SKILL/'templates/project.json').read_text())
         self.assertIsNone(p['git']['repository_id'])
+
+    def test_economical_role_defaults_and_legacy_defaults_rejected(self):
+        expected = {'relay': ('gpt-6.1-sol', 'medium'),
+                    'atlas': ('gpt-6.1-sol', 'high'),
+                    'lens': ('gpt-6.1-sol', 'high')}
+        for role, pair in expected.items():
+            with self.subTest(role=role):
+                self.assertEqual(pair, self.v.ROLES[role])
+        root = self.kit()
+        for role, old_effort in (('relay', 'high'), ('atlas', 'xhigh'), ('lens', 'xhigh')):
+            path = root / '.codex/agents' / (role + '.toml')
+            saved = path.read_text()
+            path.write_text(saved.replace('model_reasoning_effort = "' + expected[role][1] + '"',
+                                          'model_reasoning_effort = "' + old_effort + '"'))
+            self.assertTrue(any(role + '.toml.model_reasoning_effort' in e
+                                for e in self.v.validate_kit(root)))
+            path.write_text(saved)
 
     def test_wrong_role_model_or_effort_and_override_rejected(self):
         root=self.kit()
@@ -316,6 +333,26 @@ class Guards(unittest.TestCase):
         return {'role': role, 'requested_model': 'gpt-6.1-sol',
                 'requested_effort': 'medium', 'observed_model': None,
                 'observed_effort': None, 'worker_id': None, 'retries': 0, 'usage': None}
+
+    def test_dispatch_escalation_requires_reason_scope_and_evidence(self):
+        record = self.run_record('implementing')
+        d = self.dispatch('lens')
+        d.update(requested_effort='xhigh', escalation={
+            'reason': 'Diagnosed cross-tenant authorization ambiguity',
+            'scope': 'Review the changed permission contract',
+            'evidence': 'retained diagnosis reference'})
+        record['current_phase']['dispatches'] = [d]
+        self.assertEqual([], self.v.validate_run(record, self.root))
+        for bad in (None, {}, {'reason': 'risk'},
+                    {'reason': 'risk', 'scope': [], 'evidence': 'reference'}):
+            d['escalation'] = bad
+            self.assertTrue(self.v.validate_run(record, self.root))
+        d['escalation'] = {'reason': 'risk', 'scope': 'contract', 'evidence': 'reference'}
+        for model, effort in (('gpt-6-astra', 'xhigh'), ('gpt-6.1-sol', 'max')):
+            d.update(requested_model=model, requested_effort=effort)
+            self.assertTrue(self.v.validate_run(record, self.root))
+        d.update(role='pixel', requested_model='gpt-6.1-sol', requested_effort='xhigh')
+        self.assertEqual([], self.v.validate_run(record, self.root))
 
     def test_dispatch_role_wrong_json_types_are_field_errors(self):
         record = self.run_record('merging')

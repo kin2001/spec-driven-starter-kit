@@ -70,6 +70,8 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 
 ## Handoff and next action
 
+For a fresh Relay, link the approved receipts, run/claim and actual issue/PR/worktree identities. Record current HEAD/base/tree, retained dirty files, workers, in-flight outcomes, unresolved decisions and next action. Quiesce and reconcile before an authorized ownership transfer; a saved report never supplies a live PASS or permission. Reuse the existing phase report instead of adding another narrative summary.
+
 - **Linear logical state / actual status:** <actual reference or local draft>
 - **Next approved task/phase:** <actual dependency and owner>
 - **Blocker / owner action required:** <specific current gate or none>
