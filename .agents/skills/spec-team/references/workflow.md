@@ -37,6 +37,8 @@ At phase readiness, identify repository, candidate head, target-base commit, and
 
 Review/acceptance must bind the same repository, head, base SHA, and integrated tree. Any changed snapshot invalidates merge readiness and affected checks. Lens independently judges scenario answers; the controller cannot grade itself into a PASS. Required failures or missing evidence block affected acceptance. A missing required hard permission boundary blocks that action, regardless of role instructions or score.
 
+Apply [verification readiness and failure handling](context.md#verification-readiness-and-failure-handling) before push/CI: verify actionable issue inputs, affected checks, fixture isolation and current failure evidence. Clear CI stages retain dependency order and final full checks.
+
 After two equivalent failed fix attempts without new evidence, require a revised diagnosis and route the question to the right role before another equivalent attempt. This is a diagnostic checkpoint, not an extra approval or a hard work budget. Record starting failures separately from regressions, elapsed delivery time, rework cause, findings, model/effort observations, and available usage; unknown metrics remain unavailable.
 
 ## Cases and product quality

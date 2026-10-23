@@ -21,8 +21,8 @@ REQUIRED_TEXT = {
  'technical-plan.md': ('Case coverage','Requirement','Category','Actor','Preconditions','Trigger','Expected behavior','Recovery','Verification','Environment','Owner','Phase','Project quality profile','Criterion / Case IDs','Target / Scope','Rationale / Risk','Verification / Environment','Owner / Phase','Evidence status','Stack recipe and integration','Recipe / Source revision','Fit / Limits','Runtime / Dependency versions','Setup / Lockfiles','Contracts / Security patterns','Validation / Deployment / Recovery'),
  'phase-report.md': ('Case coverage','Project quality evidence','Delivery observations','Environment'),
  'memory.md': ('Project','Purpose and trust boundary','Entries','Finding','Why','Source and revision','Last verified','Recheck when'),
- 'linear-issue.md': ('Outcome and purpose','Specification references','Context','Scope and ownership','Dependencies','Implementation checklist','Acceptance criteria','Validation','Documentation','Execution and handoff'),
- 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action'),
+ 'linear-issue.md': ('Outcome and purpose','Specification references','Context','Scope and ownership','Dependencies','Implementation checklist','Acceptance criteria','Validation','Documentation','Execution and handoff','Pre-push readiness','Fixture isolation','Failure diagnosis'),
+ 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action','Pre-push readiness','Fixture isolation','Failure diagnosis'),
 }
 
 
@@ -261,7 +261,7 @@ def validate_kit(root: Path) -> list[str]:
         except (OSError,UnicodeError): errors.append(path.as_posix()+': missing/unreadable template'); continue
         headings={'Case coverage','Project quality profile','Stack recipe and integration','Project quality evidence','Delivery observations'}
         if name=='memory.md': headings.update(('Project','Purpose and trust boundary','Entries'))
-        if name=='linear-issue.md': headings.update(fields)
+        if name=='linear-issue.md': headings.update(field for field in fields if field not in ('Pre-push readiness','Fixture isolation','Failure diagnosis'))
         for field in fields:
             if field in headings and not re.search(r'^#{1,6}\s+'+re.escape(field)+r'\s*#*\s*$',text,re.I|re.M): errors.append(path.as_posix()+': missing heading '+field)
             elif field.lower() not in text.lower(): errors.append(path.as_posix()+': missing '+field)

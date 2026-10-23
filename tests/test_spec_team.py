@@ -222,6 +222,12 @@ class Guards(unittest.TestCase):
                                 for e in self.v.validate_kit(root)))
             path.write_text(saved)
 
+    def test_issue_and_dispatch_require_actionable_validation(self):
+        for name in ('linear-issue.md', 'dispatch.md'):
+            for field in ('Pre-push readiness', 'Fixture isolation', 'Failure diagnosis'):
+                with self.subTest(template=name, field=field):
+                    self.assertIn(field, self.v.REQUIRED_TEXT[name])
+
     def test_wrong_role_model_or_effort_and_override_rejected(self):
         root=self.kit()
         for role,key,value in (('forge','model_reasoning_effort','high'),('atlas','model_reasoning_effort','max'),('pixel','model','gpt-6.1-sol'),('spark','model','unknown')):

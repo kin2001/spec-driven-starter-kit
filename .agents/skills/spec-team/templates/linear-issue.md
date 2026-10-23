@@ -40,6 +40,9 @@
 
 ## Validation
 
+- **Pre-push readiness:** <affected checks/commands, tested snapshot and actual results; unavailable local services and scoped hosted diagnostic route; final full gate remains required>
+- **Fixture isolation:** <ordinary synthetic users/state/quotas isolated; deliberate rate/concurrency/persistence/recovery cases retain intended state; no production-limit relaxation>
+- **Failure diagnosis:** <none yet, or candidate/run + stage/test + expected/observed + classification/hypothesis/evidence + correction and affected recheck; revise diagnosis after two equivalent failed corrections>
 - **Implementer checks:** <actual configured command/check and expected result>
 - **Phase checks:** <combined review, case/quality evidence, selected acceptance route>
 - **Manual/hosted/device gates:** <required environment; explicitly unverified until observed>

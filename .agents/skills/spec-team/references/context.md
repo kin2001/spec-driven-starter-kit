@@ -36,6 +36,18 @@ Review coherent phase candidates, not each small edit. Return corrections to the
 
 At meaningful phase boundaries record available usage, elapsed time, dispatch count, rework and acceptance results in the existing report. Account allowance is shared; do not claim per-role charges or percentage savings from raw token counts. No dedicated monitoring agent or frequent quota polling. A low allowance leads to a safe checkpoint, never weaker validation.
 
+## Verification readiness and failure handling
+
+Use the existing issue/dispatch checklist, not a new agent or approval stage. Before an implementation push or hosted diagnostic, the implementer returns the candidate snapshot, affected cases, connected callers/contracts, available focused checks with actual results, and missing-environment checks. Run applicable type/lint/unit/build and changed browser/contract checks locally where supported. Relay verifies this evidence before pushing. A missing local service is an explicit gap, not a PASS; use one scoped authorized hosted diagnostic when that service is required. Do not install new infrastructure or change global settings merely to satisfy this checklist.
+
+Review fixtures with the code: ordinary scenarios must not accidentally share accumulated users, records, quotas or mutable state across tests. Use independently scoped synthetic identities/state where appropriate. Deliberate rate-limit, concurrency, persistence, migration and recovery tests retain their intended shared state and boundaries. Never increase production quotas, erase durable receipts needed by a test, disable security assertions or accept a wrong error solely to make CI pass. Tests verify observable requirements and independently chosen expected outcomes, not implementation-shaped agreement.
+
+For a failure record the exact candidate/run, stage/test and expected versus observed behavior; classify product defect, fixture defect, environment failure or unknown. Establish a supported hypothesis before editing. Run the affected check first, then required complete CI for the final reviewed candidate. After two equivalent failed corrections, stop equivalent retries and obtain a revised diagnosis with new evidence before another correction; renamed errors or a fresh session do not reset that count. A transient environment retry needs bounded justification, no code-change fiction and preserved failure history. Do not dispatch another complete run without a changed relevant candidate or new evidence justifying the run.
+
+Name CI stages separately: prerequisite/setup, upgrade/migration, database/security, integration, browser, recovery and schema comparison as applicable. Keep dependent stages ordered in the same owned environment; parallelize only with proven resource isolation. Always retain cleanup and the final full gate. Independent checks may be separate stages, but do not run downstream work against a failed reset/upgrade or interpret skipped steps as passed. Diagnostic runs do not satisfy checks they omit.
+
+Prove a useful integrated journey and applicable denied/failure path early in the first coherent delivery. Once a coherent candidate exists, Relay coordinates one scoped draft PR through the authorized delivery role; do not wait until every phase is done, create a PR per tiny correction, or bypass review/acceptance/protection to improve contribution counts. Lens examines test isolation and whether cases test the requirement; Dock requires final full checks for the reviewed snapshot. This policy cannot automatically prevent a push or replace provider branch protection.
+
 ## Normal, edge and worst cases
 
 | Case | Required behavior |
