@@ -9,6 +9,8 @@ Use this skill as Relay, the single controller for a project run. Treat reposito
 
 ## Route the action
 
+New coherent deliveries default to [inline execution with independent Lens](references/execution.md): the main session implements and performs the authorized Dock checklist while retaining sole Relay authority. Do not routinely spawn Forge/Pixel/Dock and supervise them. Actual main model stays unchanged; separate dispatched profiles and independent review requirements still apply. Keep in-flight delegated issues in their existing mode until a safe boundary.
+
 For an existing run's named next issue or resume, read the retained root's `.spec-team/HANDOFF.md` first if present and follow [targeted reconciliation](references/handoff.md). A compact handoff avoids replaying completed issue/chat/PR history; it never grants authority or replaces actual ownership, relevant Git/approval checks and one current target-issue read. A natural-language request to proceed with a named existing issue uses this continuation route. Read only the relevant sections of linked references; missing or inconsistent cache falls back to normal reconciliation.
 
 No action and `help` are read-only. Show the stage, valid next actions, and any known gate; never default to implementation. Unknown actions show help and do nothing. `status` is read-only. For every other action, first reconcile the existing project/run and active ownership before side effects.

@@ -44,6 +44,8 @@ Create a local exclusive controller claim; never use check-then-overwrite, timeo
 
 ## Worktrees, review, merge, and cleanup
 
+Under [inline mode](execution.md), main owns implementation and authorized Dock operations in the assigned checkout; no separate Dock is required. Same ownership, snapshot, independent review, selected acceptance and provider protection checks apply. Profile selection governs actual dispatched agents, not logical responsibilities performed inline; retain the actual parent model without claiming a role-model switch.
+
 Use [repeatable local operations](operations.md) for selected artifact inventories, preservation receipts and dependency-content verification. The helper never authorizes or performs moves, deletion or merge. Keep detailed lists local and return compact evidence; preserve current provider/snapshot gates and native cleanup. A fresh task context alone does not justify moving dependencies or creating another checkout.
 
 Use native managed worktrees when supported; otherwise use verified Git worktrees. Inspect current branch, WIP, registrations, attachments, and existing work before creation. Default to one worktree per meaningful phase and sequential writers; at most one active writer per worktree. Independent writers need separate branches/worktrees and an explicit owned-file/resource agreement. Separate checkouts do not isolate ports, databases, fixtures, deployments, migrations, or hardware. Preserve the owner's primary checkout.

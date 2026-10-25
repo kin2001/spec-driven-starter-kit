@@ -61,6 +61,8 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 
 ## Delivery observations
 
+- **Execution mode:** <inline or justified delegated exception; actual executor/reviewer and safe transition boundary>
+- **Actual main model:** <observed model/effort or unknown; record dispatched settings separately, no role-name substitution>
 - **Coordination pilot:** <observed wakeups/timeouts/unchanged messages, initial/final context, CI correction rounds, cleanup/helper failures and retained gates; unknowns explicit, no inferred savings>
 - **Elapsed delivery time:** <observed or unavailable>
 - **Equivalent failed attempts and revised diagnosis:** <actual attempts/reasons, or none observed>

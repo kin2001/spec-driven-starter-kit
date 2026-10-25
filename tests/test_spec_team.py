@@ -92,6 +92,12 @@ class Guards(unittest.TestCase):
     def test_handoff_template_is_part_of_kit_contract(self):
         self.assertIn('handoff.md', self.v.REQUIRED_TEXT)
 
+    def test_execution_mode_is_explicit_in_assignment_and_evidence(self):
+        for name in ('dispatch.md', 'phase-report.md'):
+            for field in ('Execution mode', 'Actual main model'):
+                with self.subTest(template=name, field=field):
+                    self.assertIn(field, self.v.REQUIRED_TEXT[name])
+
     def test_handoff_cli_falls_back_and_state_race_preserves_summary(self):
         h, r, claim, source = self.handoff_fixture()
         with contextlib.redirect_stdout(io.StringIO()) as output:
@@ -245,7 +251,7 @@ class Guards(unittest.TestCase):
     def kit(self):
         root=self.root/'kit'; root.mkdir()
         files=['AGENTS.md',str(self.v.SKILL/'SKILL.md'),str(self.v.SKILL/'agents/openai.yaml'),str(self.v.SKILL/'scripts/setup.py'),str(self.v.SKILL/'dependencies.lock.json')]
-        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md')]
+        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md','execution.md')]
         files += [str(self.v.SKILL/'scripts'/name) for name in ('handoff.py','operations.py')]
         files += [str(self.v.SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
         for filename in files:

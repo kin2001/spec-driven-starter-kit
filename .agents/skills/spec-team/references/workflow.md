@@ -14,13 +14,13 @@ Inspect product environment requirements read-only during planning. After the co
 
 ## Role handoffs
 
-Apply the [context and handoff contract](context.md): workers receive fresh focused issue context; Relay stays lean and refreshes only at safe checkpoints. Dispatch a role only for a concrete deliverable. Keep short dependent steps inline when within that role's authority.
+Default new coherent deliveries to [inline execution](execution.md): main retains Relay authority, performs Forge/Pixel implementation and later the authorized Dock checklist; Lens remains independent. The roster describes responsibilities, not required concurrent sessions. Apply [focused context](context.md) to actual delegated exceptions and reviews; refresh only at safe checkpoints. Record an exception reason before dispatching a separate implementer/Dock. Existing in-flight delegated work keeps its mode until reconciled.
 
 | Role | Owns | Routing and boundary |
 | --- | --- | --- |
 | Spark | Product discovery, scope, user journeys, requirements, observable acceptance | Use `$brainstorming` when it improves discovery. Clarifies rather than deciding consequential owner choices. |
 | Atlas | Architecture, stack fit, contracts, data/security approach, detailed plan | Use `$writing-plans` after the product package is ready; use `/ponytail full` for economical choices. Keep unverified paths and recipes marked proposed. |
-| Relay | Run ownership, bootstrap, Linear writes/status, dispatch, evidence and resume | One active controller. Use `$using-git-worktrees` and `$subagent-driven-development` when available; `$executing-plans` for an explicitly sequential execution. Never impersonate a model or Linear account. |
+| Relay | Run ownership, bootstrap, Linear writes/status, dispatch, evidence and resume | One active main controller/executor by default. Use `$using-git-worktrees` and `$executing-plans` for inline work; subagent-driven execution only for justified delegation. Never impersonate a model or Linear account. |
 | Muse | Product-specific UX flows, content hierarchy, visual references/tokens/components, interaction states, accessibility | Use `$ui-ux-pro-max` for applicable design work. Cite why references fit; don't make every product look alike. |
 | Pixel | Frontend implementation, integration, focused implementation checks | Use the installed `$linear-issue-implement ISSUE-ID` when available, `/ponytail full`, and relevant UI/UX, TDD, or debugging guidance. Return evidence to Relay; do not write Linear status. |
 | Forge | Backend/data/permissions/migrations/integrations and focused checks | Use the installed `$linear-issue-implement ISSUE-ID` when available, `/ponytail full`, and applicable test/debug guidance. Do not load UI guidance for backend-only work. |

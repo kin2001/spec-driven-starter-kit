@@ -20,10 +20,10 @@ REQUIRED_TEXT = {
  'handoff.md': ('Last completed delivery','Relevant contracts and decisions','Next task','Unresolved carryover','Ownership at checkpoint','Verification boundary','Evidence'),
  'product-spec.md': ('Case coverage','Requirement','Category','Actor','Preconditions','Trigger','Expected behavior','Recovery','Verification','Environment'),
  'technical-plan.md': ('Case coverage','Requirement','Category','Actor','Preconditions','Trigger','Expected behavior','Recovery','Verification','Environment','Owner','Phase','Project quality profile','Criterion / Case IDs','Target / Scope','Rationale / Risk','Verification / Environment','Owner / Phase','Evidence status','Stack recipe and integration','Recipe / Source revision','Fit / Limits','Runtime / Dependency versions','Setup / Lockfiles','Contracts / Security patterns','Validation / Deployment / Recovery'),
- 'phase-report.md': ('Case coverage','Project quality evidence','Delivery observations','Environment'),
+ 'phase-report.md': ('Case coverage','Project quality evidence','Delivery observations','Environment','Execution mode','Actual main model'),
  'memory.md': ('Project','Purpose and trust boundary','Entries','Finding','Why','Source and revision','Last verified','Recheck when'),
  'linear-issue.md': ('Outcome and purpose','Specification references','Context','Scope and ownership','Dependencies','Implementation checklist','Acceptance criteria','Validation','Documentation','Execution and handoff','Pre-push readiness','Fixture isolation','Failure diagnosis'),
- 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action','Pre-push readiness','Fixture isolation','Failure diagnosis','Coordination'),
+ 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action','Pre-push readiness','Fixture isolation','Failure diagnosis','Coordination','Execution mode','Actual main model'),
 }
 
 
@@ -237,7 +237,7 @@ def _json(path, errors, field):
 def validate_kit(root: Path) -> list[str]:
     root=Path(root); errors=[]
     required=['AGENTS.md',str(SKILL/'SKILL.md'),str(SKILL/'agents/openai.yaml'),str(SKILL/'scripts/setup.py'),str(SKILL/'dependencies.lock.json')]
-    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md')]
+    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md','execution.md')]
     required += [str(SKILL/'scripts'/name) for name in ('handoff.py','operations.py')]
     required += [str(SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
     for name in required:

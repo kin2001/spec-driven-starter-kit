@@ -2,6 +2,8 @@
 
 Use existing roles and current model defaults. This is a bounded operating contract, not a scheduler or new agent. Keep independent review, selected acceptance, actual ownership and provider-enforced integration gates.
 
+Apply [inline execution](execution.md) for new coherent deliveries: main implements and later follows the Dock checklist; independent Lens remains separate. Milestone worker/observer rules below govern actual dispatches, not a requirement to create a supervised implementer or Dock. Current delegated tasks retain their mode until a safe transition.
+
 ## Milestones and waiting
 
 At dispatch assign one coherent outcome and a return condition: blocker, consequential contract change, review-ready candidate, or completion. Workers keep routine exploration/local logs in their own context and existing evidence files. Return a compact summary of issue/status, repository/head/base/tree and dirty files, changed contracts, commands/results, blockers/unverified gates and next action. Aim for 300 words plus evidence links; expand consequential security/recovery details rather than hiding them behind a word limit.
