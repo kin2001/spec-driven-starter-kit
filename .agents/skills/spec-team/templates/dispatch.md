@@ -2,6 +2,7 @@
 
 ## Authorized outcome
 
+- **Handoff context:** <controller-root HANDOFF.md binding/check result or fallback; current target-issue read and relevant local Git/ownership evidence; only needed source/evidence slices, no full history>
 - **Approved package:** <project-relative spec and plan paths, SHA-256 receipt references>
 - **Requirement, quality, and case IDs:** <only the applicable IDs>
 - **Issue and owner role:** <actual issue reference and responsible role>

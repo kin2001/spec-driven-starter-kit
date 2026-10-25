@@ -4,6 +4,8 @@ Relay is the sole writer for Linear project setup, milestones, issues, relations
 
 ## Project setup
 
+For a named next issue, follow [compact handoff routing](handoff.md): read the current target once for scope/status/blockers and pass that bounded read to its workers. Refresh after relevant changes or uncertainty. Prior issue completion is cited historical evidence; do not reread all prior tickets/comments/PRs by default. Required dependency ambiguity gets a targeted readback. Remote writes still require current authorization and readback.
+
 Resolve the actual workspace, team, project, owner/lead accounts, and status mapping from authenticated tools. Search and read before creating; reuse existing IDs and links. Write only after the complete spec/plan package has current approval receipts and prerequisites are available. Read back each created or changed resource before reporting success. A timeout is ambiguous: reconcile with live search before retrying. Missing access means prepare clearly labeled local drafts and resolve setup; do not claim remote resources or dispatch as though live tracking exists.
 
 Use one bounded delivery project with only the few meaningful approved milestones. The overview states goal, scope/non-goals, approved spec/plan revision, milestones, current phase, and important risks. Link source documents as project resources; while unpublished, use labeled local paths or a summary, never an invented URL. Reuse the current project when continuing a run. Do not create projects per role, worktree, tiny feature, or case.

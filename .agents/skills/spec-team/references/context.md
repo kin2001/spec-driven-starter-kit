@@ -4,6 +4,7 @@ Use this contract for dispatch, review and context refresh. Preserve the approve
 
 ## Assignment and context lifetime
 
+- Start a named next issue or resume from the optional controller-root `.spec-team/HANDOFF.md` using [targeted reconciliation](handoff.md). Reuse verified historical context with actual ownership/Git/approval checks and one current target-issue read. At settled issue boundaries Relay publishes the compact cache through `scripts/handoff.py`; do not reconstruct prior chats/PR/ticket history unless relevant evidence is missing or inconsistent.
 - Dispatch only for a concrete deliverable with an owner, inputs, boundaries and return condition. Keep short dependent steps inline within the current role's authority; do not launch every roster member for every issue.
 - Use a fresh worker context for each coherent implementation issue and independent review. On a host exposing history options, request no conversation-history fork (for example `fork_turns: "none"`); do not invent unsupported parameters. Applicable host instructions still apply. If fresh context is unavailable, report that limitation and use an explicitly bounded continuation rather than claiming a reset.
 - Pass the issue, approved source/contract slices, case IDs, assigned worktree and current snapshot, ownership, required checks and next action using the dispatch template. Let the worker inspect connected code. Do not forward whole transcripts, unrelated screenshots, entire specifications or large raw logs by default.
@@ -12,7 +13,7 @@ Use this contract for dispatch, review and context refresh. Preserve the approve
 
 ## Checkpoints and controller refresh
 
-At a settled phase boundary, or when context loss/growth makes a focused continuation unreliable, use the existing phase report/run record as a checkpoint. Do not create another summary service or one chat per tiny task. A fresh chat has instruction/startup costs and can lose useful cache reuse; no fixed token threshold or savings is promised.
+At a settled phase boundary, or when context loss/growth makes a focused continuation unreliable, use the existing phase report/run record as the evidence checkpoint. The optional rotating HANDOFF.md is a bounded index of that evidence, not another source of truth or summary service. Do not create one chat per tiny task. A fresh chat has instruction/startup costs and can lose useful cache reuse; no fixed token threshold or savings is promised.
 
 Before replacing a worker, stop its new writes and reconcile in-flight work. Before replacing Relay, stop new dispatches, quiesce all workers and reconcile external operations. Capture repository/run/phase and claim identity, approved spec/plan receipt references, issue/PR identifiers, worktree/branch, current HEAD/base/tree, dirty files, completed and remaining work, check evidence and tested snapshot, unresolved decisions, pending/unknown operations and next action. Exclude secrets and raw transcripts. Reference authoritative artifacts instead of duplicating their bodies.
 

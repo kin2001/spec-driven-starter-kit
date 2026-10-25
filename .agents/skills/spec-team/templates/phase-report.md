@@ -70,7 +70,9 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 
 ## Handoff and next action
 
-For a fresh Relay, link the approved receipts, run/claim and actual issue/PR/worktree identities. Record current HEAD/base/tree, retained dirty files, workers, in-flight outcomes, unresolved decisions and next action. Quiesce and reconcile before an authorized ownership transfer; a saved report never supplies a live PASS or permission. Reuse the existing phase report instead of adding another narrative summary.
+At settled issue boundaries and before authorized transfer, Relay saves existing evidence/run state, then publishes the concise `.spec-team/HANDOFF.md` with `scripts/handoff.py` using [the handoff contract](../references/handoff.md). Carry unresolved older dependencies and uncertain outcomes forward; archive prior summary bytes, never erase underlying reports. A run/claim change invalidates the binding; reconcile before republishing. Record startup elapsed time, historical reads and duplicate investigation here when observed; do not infer savings.
+
+For a fresh Relay, link the approved receipts, run/claim and actual issue/PR/worktree identities. Record current HEAD/base/tree, retained dirty files, workers, in-flight outcomes, unresolved decisions and next action. Quiesce and reconcile before an authorized ownership transfer; a saved report never supplies a live PASS or permission. HANDOFF.md indexes this evidence without copying another full narrative.
 
 - **Linear logical state / actual status:** <actual reference or local draft>
 - **Next approved task/phase:** <actual dependency and owner>

@@ -17,6 +17,7 @@ STATUSES = ('backlog','ready','in_progress','in_review','awaiting_acceptance','d
 STATES = ('idea','spec_review','planning','plan_review','setup','implementing','in_review','awaiting_acceptance','merging','cleanup','complete','stopping','stopped','blocked')
 ACTIVE = ('implementing','in_review','awaiting_acceptance','merging','cleanup','complete')
 REQUIRED_TEXT = {
+ 'handoff.md': ('Last completed delivery','Relevant contracts and decisions','Next task','Unresolved carryover','Ownership at checkpoint','Verification boundary','Evidence'),
  'product-spec.md': ('Case coverage','Requirement','Category','Actor','Preconditions','Trigger','Expected behavior','Recovery','Verification','Environment'),
  'technical-plan.md': ('Case coverage','Requirement','Category','Actor','Preconditions','Trigger','Expected behavior','Recovery','Verification','Environment','Owner','Phase','Project quality profile','Criterion / Case IDs','Target / Scope','Rationale / Risk','Verification / Environment','Owner / Phase','Evidence status','Stack recipe and integration','Recipe / Source revision','Fit / Limits','Runtime / Dependency versions','Setup / Lockfiles','Contracts / Security patterns','Validation / Deployment / Recovery'),
  'phase-report.md': ('Case coverage','Project quality evidence','Delivery observations','Environment'),
@@ -236,7 +237,8 @@ def _json(path, errors, field):
 def validate_kit(root: Path) -> list[str]:
     root=Path(root); errors=[]
     required=['AGENTS.md',str(SKILL/'SKILL.md'),str(SKILL/'agents/openai.yaml'),str(SKILL/'scripts/setup.py'),str(SKILL/'dependencies.lock.json')]
-    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md')]
+    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md')]
+    required += [str(SKILL/'scripts/handoff.py')]
     required += [str(SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
     for name in required:
         if not (root/name).is_file(): errors.append(name+': missing required file')
@@ -261,6 +263,7 @@ def validate_kit(root: Path) -> list[str]:
         except (OSError,UnicodeError): errors.append(path.as_posix()+': missing/unreadable template'); continue
         headings={'Case coverage','Project quality profile','Stack recipe and integration','Project quality evidence','Delivery observations'}
         if name=='memory.md': headings.update(('Project','Purpose and trust boundary','Entries'))
+        if name=='handoff.md': headings.update(fields)
         if name=='linear-issue.md': headings.update(field for field in fields if field not in ('Pre-push readiness','Fixture isolation','Failure diagnosis'))
         for field in fields:
             if field in headings and not re.search(r'^#{1,6}\s+'+re.escape(field)+r'\s*#*\s*$',text,re.I|re.M): errors.append(path.as_posix()+': missing heading '+field)
