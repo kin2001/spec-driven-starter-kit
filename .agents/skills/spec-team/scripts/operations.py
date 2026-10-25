@@ -71,6 +71,7 @@ def preserve(source, destination, record, controller_root, claim_id, run_id):
     owner()
     source = _directory(source)
     destination = Path(os.path.abspath(destination)); _check_path(destination)
+    destination = destination.resolve()
     allowed = controller / '.spec-team/local/preserved'
     if allowed not in destination.parents or source == destination or source in destination.parents or destination in source.parents:
         raise ValueError('destination: outside preserved storage or overlaps source')

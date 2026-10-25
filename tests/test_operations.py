@@ -112,7 +112,7 @@ class OperationsTests(unittest.TestCase):
     def test_unreadable_subtree_never_becomes_complete_inventory(self):
         record = self.o.snapshot(self.source); scandir = self.o.os.scandir
         def denied(path):
-            if Path(path) == self.source / 'nested': raise PermissionError('unreadable subtree')
+            if Path(path).resolve() == (self.source / 'nested').resolve(): raise PermissionError('unreadable subtree')
             return scandir(path)
         with mock.patch.object(self.o.os, 'scandir', side_effect=denied):
             with self.assertRaises(OSError): self.o.snapshot(self.source)
@@ -127,6 +127,18 @@ class OperationsTests(unittest.TestCase):
         for source in (self.source, metadata, objects):
             with self.subTest(source=source):
                 with self.assertRaises(ValueError): self.o.snapshot(source)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows short-path alias regression')
+    def test_preservation_accepts_canonical_destination_with_short_controller_path(self):
+        import ctypes
+        buffer = ctypes.create_unicode_buffer(32768)
+        result = ctypes.windll.kernel32.GetShortPathNameW(str(self.controller), buffer, len(buffer))
+        if not result or Path(buffer.value) == self.controller.resolve():
+            self.skipTest('short path alias unavailable')
+        alias = Path(buffer.value)
+        destination = alias / '.spec-team/local/preserved/alias-test'
+        self.o.preserve(self.source, destination, self.o.snapshot(self.source), alias, self.claim['claim_id'], self.run)
+        self.assertTrue(destination.is_dir())
 
 
 if __name__ == '__main__': unittest.main()
