@@ -61,6 +61,7 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 
 ## Delivery observations
 
+- **Coordination pilot:** <observed wakeups/timeouts/unchanged messages, initial/final context, CI correction rounds, cleanup/helper failures and retained gates; unknowns explicit, no inferred savings>
 - **Elapsed delivery time:** <observed or unavailable>
 - **Equivalent failed attempts and revised diagnosis:** <actual attempts/reasons, or none observed>
 - **Starting failures vs. regressions:** <specific evidence>

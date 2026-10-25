@@ -245,8 +245,8 @@ class Guards(unittest.TestCase):
     def kit(self):
         root=self.root/'kit'; root.mkdir()
         files=['AGENTS.md',str(self.v.SKILL/'SKILL.md'),str(self.v.SKILL/'agents/openai.yaml'),str(self.v.SKILL/'scripts/setup.py'),str(self.v.SKILL/'dependencies.lock.json')]
-        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md')]
-        files += [str(self.v.SKILL/'scripts/handoff.py')]
+        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md')]
+        files += [str(self.v.SKILL/'scripts'/name) for name in ('handoff.py','operations.py')]
         files += [str(self.v.SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
         for filename in files:
             path=root/filename; path.parent.mkdir(parents=True,exist_ok=True); path.write_text('fixture')

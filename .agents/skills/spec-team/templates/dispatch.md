@@ -40,6 +40,7 @@ Do not restart for each tiny step or correction. A continuation must reconcile a
 
 ## Verification and return
 
+- **Coordination:** <blocker/contract-change/review-ready/completion return; one CI observer + candidate/run; supported completion wait or bounded fallback; task-appropriate liveness condition; compact evidence paths, no duplicate polling>
 - **Pre-push readiness:** <affected checks/commands, tested snapshot and actual results; unavailable local services and scoped hosted diagnostic route; final full gate remains required>
 - **Fixture isolation:** <ordinary synthetic users/state/quotas isolated; deliberate rate/concurrency/persistence/recovery cases retain intended state; no production-limit relaxation>
 - **Failure diagnosis:** <none yet, or candidate/run + stage/test + expected/observed + classification/hypothesis/evidence + correction and affected recheck; revise diagnosis after two equivalent failed corrections>

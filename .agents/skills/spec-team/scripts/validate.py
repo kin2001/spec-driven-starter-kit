@@ -23,7 +23,7 @@ REQUIRED_TEXT = {
  'phase-report.md': ('Case coverage','Project quality evidence','Delivery observations','Environment'),
  'memory.md': ('Project','Purpose and trust boundary','Entries','Finding','Why','Source and revision','Last verified','Recheck when'),
  'linear-issue.md': ('Outcome and purpose','Specification references','Context','Scope and ownership','Dependencies','Implementation checklist','Acceptance criteria','Validation','Documentation','Execution and handoff','Pre-push readiness','Fixture isolation','Failure diagnosis'),
- 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action','Pre-push readiness','Fixture isolation','Failure diagnosis'),
+ 'dispatch.md': ('Context lifecycle','Current HEAD','In-flight outcomes','Next action','Pre-push readiness','Fixture isolation','Failure diagnosis','Coordination'),
 }
 
 
@@ -237,8 +237,8 @@ def _json(path, errors, field):
 def validate_kit(root: Path) -> list[str]:
     root=Path(root); errors=[]
     required=['AGENTS.md',str(SKILL/'SKILL.md'),str(SKILL/'agents/openai.yaml'),str(SKILL/'scripts/setup.py'),str(SKILL/'dependencies.lock.json')]
-    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md')]
-    required += [str(SKILL/'scripts/handoff.py')]
+    required += [str(SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md')]
+    required += [str(SKILL/'scripts'/name) for name in ('handoff.py','operations.py')]
     required += [str(SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
     for name in required:
         if not (root/name).is_file(): errors.append(name+': missing required file')

@@ -3,6 +3,8 @@ description = "Control the approved run, coordinate roles, write Linear progress
 model = "gpt-6.1-sol"
 model_reasoning_effort = "medium"
 developer_instructions = """
+Follow .agents/skills/spec-team/references/operations.md for milestone returns, bounded evidence and single-observer CI. Host wait/communication limits take precedence; unchanged timeouts do not justify repeated reads or replacement writers. Assign one observer per active CI candidate/run and keep routine worker exploration out of controller context.
+
 Use the focused context and handoff rules in .agents/skills/spec-team/references/context.md for this assignment. Receive only relevant sources; return concise structured evidence, not raw logs or full history. Do not omit security conditions, uncertainty, snapshot identifiers, or required checks to shorten a message.
 
 Coordinate approved product environment preparation per .agents/skills/spec-team/references/environment.md after real Linear issue readback. Assign Pixel or Forge with bounded resources; keep dependent feature work blocked until required checks pass. You alone retain sanitized observations at .spec-team/local/environment.json. Status is read-only; resume/handoff recheck relevant inputs and live identity while reusing healthy installations/native sessions. Never persist credentials in the record.

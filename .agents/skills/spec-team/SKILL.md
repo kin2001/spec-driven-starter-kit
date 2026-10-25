@@ -28,6 +28,7 @@ No action and `help` are read-only. Show the stage, valid next actions, and any 
 
 ## Load only what this action needs
 
+- Read [quiet coordination and operations](references/operations.md) before dispatch, CI observation or local inventory/preservation. Use milestone returns, a single CI observer and compact evidence; actual host limits and current authority still apply.
 - Read [context and handoffs](references/context.md) before dispatch, review, or a context refresh; use focused issue workers and safe phase checkpoints, with concise evidence.
 
 - Read [workflow](references/workflow.md) for approval, roles, quality/case policy, phases, memory, change, stop/resume, or handoff.
