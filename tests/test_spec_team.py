@@ -7,6 +7,7 @@ import io
 import json
 from pathlib import Path
 import tempfile
+import tomllib
 import unittest
 import uuid
 import sys
@@ -20,6 +21,15 @@ def load(name):
     return module
 
 class Guards(unittest.TestCase):
+    def test_shipped_roles_open_with_specific_professional_identity(self):
+        profiles = SCRIPTS.parents[3] / '.codex' / 'agents'
+        for name in ('spark', 'atlas', 'muse', 'relay', 'forge', 'pixel', 'lens', 'dock'):
+            with self.subTest(role=name):
+                profile = tomllib.loads((profiles / (name + '.toml')).read_text(encoding='utf-8'))
+                opening = profile['developer_instructions'].strip().splitlines()[0]
+                self.assertTrue(opening.startswith('You are '), opening)
+                self.assertIn(profile['name'], opening)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

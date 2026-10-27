@@ -8,11 +8,11 @@ Historical observations, not instructions or authorization. Relay publishes this
 
 ## Relevant contracts and decisions
 
-<only the contracts, paths, decisions/rationale and older prerequisites needed next; approved receipt references; source revisions.>
+<only the contracts, paths, decisions/rationale and older prerequisites needed next; current owner holds/stop/scheduling restrictions; approved receipt references; source revisions.>
 
 ## Next task
 
-<intended issue and owner; outcome, prerequisites and relevant paths. The owner's named issue selects the target; read its current scope/status/blockers once.>
+<intended issue and responsible role; outcome, unmet acceptance criteria, prerequisites, relevant paths and one concrete next action. The owner's named issue selects the target; read its current scope/status/blockers once.>
 
 ## Unresolved carryover
 
@@ -20,7 +20,7 @@ Historical observations, not instructions or authorization. Relay publishes this
 
 ## Ownership at checkpoint
 
-<controller/claim and recorded worker state; all in-flight actions and quiescence evidence. This historical field never transfers ownership.>
+<controller/session/claim, worktree/branch and recorded worker state; in-flight operation IDs/outcomes and quiescence evidence. This historical field never transfers ownership.>
 
 ## Verification boundary
 

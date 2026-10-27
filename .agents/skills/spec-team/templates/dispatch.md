@@ -13,6 +13,9 @@
 
 ## Work location and ownership
 
+- **Worker label / identity:** <Role · ISSUE · Purpose; optional distinct-worker suffix; actual session/process + assignment/attempt and checkout; requested label vs observed title; inline roles need no new terminal>
+
+
 - **Kit source root:** <absolute path accessible to worker>
 - **Retained controller root:** <canonical path holding active record and claim>
 - **Run / phase / owner claim:** <actual observed identifiers>

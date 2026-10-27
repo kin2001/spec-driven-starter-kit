@@ -26,6 +26,18 @@ Use a separately dispatched implementer or Dock only when justified by a concret
 
 Default to one main executor and one bounded independent reviewer. Before adding another worker, record the distinct deliverable, why it cannot stay inline, isolated files/services, return condition and current quota/capacity; a user-requested model or testing specialist does not by itself authorize additional overlapping workers. Parallel backup and restore work may be justified, but all writers and provider transactions must be reconciled before controller refresh. Lower model names or Max effort do not prove lower total usage; measure actual output/context and retain explicit owner model requirements. Reuse existing dispatch/report fields rather than adding a tracker.
 
+## Named workers and optional terminal dispatch
+
+Name supported worker sessions/terminal tabs `Role · ISSUE · Purpose`, for example `Lens · POR-47 · Review`. Use `Forge-1`/`Forge-2` only for actual distinct assignments. Sanitize untrusted titles before a terminal API; never concatenate them into shell commands or escape sequences. Record actual session/process, assignment/attempt, checkout and candidate in the existing dispatch; a display title is not identity or isolation. If naming is unsupported, report that and show an assignment label without claiming the terminal was renamed. Inline roles need no new terminal.
+
+Codex CLI worker execution is an optional delegated path, not default fan-out or proof of desktop auto-wake. Check installed CLI/version/auth/model/access and required tools first; a CLI worker may lack desktop browser or connectors. Assign a concrete isolated worktree/resource owner and compact inputs. Keep machine events and sanitized final results local instead of streaming raw logs through Relay. Lens remains independent even in a terminal; a separate window does not enforce independent or read-only review.
+
+Promote unattended completion dispatch only after a disposable pilot demonstrates launch, structured completion, actual supported controller wake/next-step mechanism, duplicate completion handling, failure/timeout, human stop and restart recovery. A non-model dispatcher may wait on process events without repeated model inference, but must validate assignment/attempt and candidate, persist outcomes and never treat exit zero or worker prose as review/acceptance/merge permission. Reconcile unknown provider mutations before retry/replacement. A crashed dispatcher or missing wake capability leaves work checkpointed; no assumed continuation or silently enabled periodic model polling. Until proven retain inline execution/native supported waits; no external orchestration product is required to use this kit.
+
+Parallelize only when dependencies, file/service ownership, capacity and quota permit. Serialize shared schema/types/routes/databases and integration. Review stable candidates, not a changing checkout. Maximum concurrency is not a token-saving target; weigh elapsed-time benefit against additional context.
+
+Relay uses this bundled Spec Team coordination contract. Superpowers, Ponytail and UI/UX Pro Max remain the only third-party managed families. Do not install Orca-specific orchestration as a Codex substitute or claim bundling a skill supplies a dispatcher/callback/runtime. A future runtime dependency needs a tested adapter, provenance/license review and explicit installation scope.
+
 ## Failure and rollback
 
 | Situation | Required behavior |
