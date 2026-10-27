@@ -24,6 +24,8 @@ Retain a live delegated issue's current mode until its coherent work and ownersh
 
 Use a separately dispatched implementer or Dock only when justified by a concrete need: independent parallel work with non-overlapping files/resources, an explicit host/model/permission requirement, or a bounded specialist task that cannot reasonably remain inline. Record the reason and actual owner/inputs/return condition before dispatch, with appropriate worktree and shared-resource isolation. Do not trigger an exception solely because the roster contains a role or an issue has several checklist steps. Apply existing fresh-worker/quiet-coordination contracts to real dispatches. Independent Lens is required, not an exception.
 
+Default to one main executor and one bounded independent reviewer. Before adding another worker, record the distinct deliverable, why it cannot stay inline, isolated files/services, return condition and current quota/capacity; a user-requested model or testing specialist does not by itself authorize additional overlapping workers. Parallel backup and restore work may be justified, but all writers and provider transactions must be reconciled before controller refresh. Lower model names or Max effort do not prove lower total usage; measure actual output/context and retain explicit owner model requirements. Reuse existing dispatch/report fields rather than adding a tracker.
+
 ## Failure and rollback
 
 | Situation | Required behavior |

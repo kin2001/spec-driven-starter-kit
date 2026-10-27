@@ -24,7 +24,7 @@
 ## Context lifecycle
 
 - **Fresh context:** <new worker for a coherent issue or independent review; no full-history fork>
-- **Continuation checkpoint:** <prior work, remaining work, dirty files, unresolved decisions; source references, not a transcript>
+- **Continuation checkpoint:** <prior work, remaining work, dirty files, unresolved decisions; source references, not a transcript; for an oversized issue name the settled subdelivery and safe same-issue refresh boundary>
 - **In-flight outcomes:** <none after reconciliation, or exact pending/unknown action that blocks retry/transfer>
 - **Next action:** <one concrete approved step>
 
@@ -42,7 +42,7 @@ Do not restart for each tiny step or correction. A continuation must reconcile a
 
 ## Verification and return
 
-- **Coordination:** <blocker/contract-change/review-ready/completion return; one CI observer + candidate/run; supported completion wait or bounded fallback; task-appropriate liveness condition; compact evidence paths, no duplicate polling>
+- **Coordination:** <blocker/contract-change/review-ready/completion return; one executor + bounded independent Lens by default; extra worker needs distinct deliverable/isolation/reason/return condition and capacity; one CI observer + candidate/run; supported completion wait or bounded fallback; task-appropriate liveness condition; compact evidence paths, no duplicate polling; if owner authorizes quota continuation, record threshold/early quiescence/reset buffer and actual schedule receipt or capability gap>
 - **Pre-push readiness:** <affected checks/commands, tested snapshot and actual results; unavailable local services and scoped hosted diagnostic route; final full gate remains required>
 - **Fixture isolation:** <ordinary synthetic users/state/quotas isolated; deliberate rate/concurrency/persistence/recovery cases retain intended state; no production-limit relaxation>
 - **Failure diagnosis:** <none yet, or candidate/run + stage/test + expected/observed + classification/hypothesis/evidence + correction and affected recheck; revise diagnosis after two equivalent failed corrections>

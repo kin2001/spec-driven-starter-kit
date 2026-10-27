@@ -61,6 +61,8 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 
 ## Delivery observations
 
+Use compact evidence references for same-issue subdelivery refreshes and bounded reviewer scope. Record extra-worker exceptions and actual context/effort observations. If quota continuation was authorized, distinguish remaining allowance, quiescence/checkpoint, actual automation ID/target/reset-plus-buffer/readback and later execution; instructions alone are not a scheduled or successful resume. Preserve unresolved operations and the latest human stop.
+
 - **Execution mode:** <inline or justified delegated exception; actual executor/reviewer and safe transition boundary>
 - **Actual main model:** <observed model/effort or unknown; record dispatched settings separately, no role-name substitution>
 - **Coordination pilot:** <observed wakeups/timeouts/unchanged messages, initial/final context, CI correction rounds, cleanup/helper failures and retained gates; unknowns explicit, no inferred savings>
