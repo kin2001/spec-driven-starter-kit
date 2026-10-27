@@ -7,8 +7,11 @@ import io
 import json
 from pathlib import Path
 import tempfile
+import tomllib
 import unittest
 import uuid
+import sys
+from unittest import mock
 
 SCRIPTS = Path(__file__).resolve().parents[1] / '.agents/skills/spec-team/scripts'
 def load(name):
@@ -18,6 +21,15 @@ def load(name):
     return module
 
 class Guards(unittest.TestCase):
+    def test_shipped_roles_open_with_specific_professional_identity(self):
+        profiles = SCRIPTS.parents[3] / '.codex' / 'agents'
+        for name in ('spark', 'atlas', 'muse', 'relay', 'forge', 'pixel', 'lens', 'dock'):
+            with self.subTest(role=name):
+                profile = tomllib.loads((profiles / (name + '.toml')).read_text(encoding='utf-8'))
+                opening = profile['developer_instructions'].strip().splitlines()[0]
+                self.assertTrue(opening.startswith('You are '), opening)
+                self.assertIn(profile['name'], opening)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
@@ -31,6 +43,95 @@ class Guards(unittest.TestCase):
           'linear': dict.fromkeys(('workspace_id','team_id','project_id','assignee_id','lead_id'), None) | {'status_ids': dict.fromkeys(('backlog','ready','in_progress','in_review','awaiting_acceptance','done'), None)},
           'git': dict.fromkeys(('provider','repository_id','remote_url','base_branch','merge_strategy'), None) | {'codex_coauthor': {'name':'Codex','email':'codex@openai.com'}},
           'validation': dict.fromkeys(('test','lint','build','acceptance'), None)}
+
+    def handoff_fixture(self):
+        with mock.patch.object(sys, 'path', [str(SCRIPTS), *sys.path]):
+            h = load('handoff')
+        r = self.run_record('implementing')
+        claim = self.o.claim_owner(self.root, 'relay', r['run_id'])
+        r['owner_claim_id'] = claim['claim_id']
+        (self.root / '.spec-team/run.json').write_text(json.dumps(r), encoding='utf-8')
+        source = self.root / '.spec-team/draft.md'
+        source.write_text('\n\n'.join('## ' + section + '\nRecorded facts or explicitly unknown; evidence remains historical.' for section in h.SECTIONS), encoding='utf-8')
+        return h, r, claim, source
+
+    def test_handoff_publication_binding_and_rotation(self):
+        h, r, claim, source = self.handoff_fixture()
+        h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        old = (self.root / '.spec-team/HANDOFF.md').read_bytes()
+        self.assertEqual(h.check(self.root)['run_id'], r['run_id'])
+        source.write_text(source.read_text(encoding='utf-8') + '\nNew context.\n', encoding='utf-8')
+        h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        archive = self.root / '.spec-team/reports/handoffs' / (hashlib.sha256(old).hexdigest() + '.md')
+        self.assertEqual(old, archive.read_bytes())
+        self.assertFalse(list((self.root / '.spec-team').glob('*.tmp')))
+
+    def test_handoff_stale_run_approval_and_claim(self):
+        h, r, claim, source = self.handoff_fixture()
+        h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        run = self.root / '.spec-team/run.json'; original = run.read_bytes()
+        run.write_bytes(original + b'\n')
+        with self.assertRaisesRegex(ValueError, 'run changed'): h.check(self.root)
+        run.write_bytes(original)
+        approval = self.root / r['approvals']['spec']['path']
+        approval.write_text('changed approval', encoding='utf-8')
+        with self.assertRaises(ValueError): h.check(self.root)
+        with self.assertRaises(ValueError): h.publish(self.root, str(uuid.uuid4()), r['run_id'], source)
+
+    def test_handoff_failed_replace_preserves_old_and_rejects_malformed(self):
+        h, r, claim, source = self.handoff_fixture()
+        h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        target = self.root / '.spec-team/HANDOFF.md'; old = target.read_bytes()
+        with mock.patch.object(h.os, 'replace', side_effect=OSError('simulated interruption')):
+            with self.assertRaises(OSError): h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        self.assertEqual(old, target.read_bytes())
+        self.assertFalse(list(target.parent.glob('*.tmp')))
+        source.write_text('## Last completed delivery\nOnly one section.', encoding='utf-8')
+        with self.assertRaises(ValueError): h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        self.assertEqual(old, target.read_bytes())
+
+    def test_handoff_redirected_target_rejected(self):
+        h, r, claim, source = self.handoff_fixture()
+        outside = self.root / 'outside.md'; outside.write_text('preserve', encoding='utf-8')
+        target = self.root / '.spec-team/HANDOFF.md'
+        try: target.symlink_to(outside)
+        except OSError: self.skipTest('symlink privilege unavailable')
+        with self.assertRaises(ValueError): h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        self.assertEqual('preserve', outside.read_text(encoding='utf-8'))
+
+    def test_handoff_template_is_part_of_kit_contract(self):
+        self.assertIn('handoff.md', self.v.REQUIRED_TEXT)
+
+    def test_execution_mode_is_explicit_in_assignment_and_evidence(self):
+        for name in ('dispatch.md', 'phase-report.md'):
+            for field in ('Execution mode', 'Actual main model'):
+                with self.subTest(template=name, field=field):
+                    self.assertIn(field, self.v.REQUIRED_TEXT[name])
+
+    def test_handoff_cli_falls_back_and_state_race_preserves_summary(self):
+        h, r, claim, source = self.handoff_fixture()
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(1, h.main(['check', '--root', str(self.root)]))
+        self.assertIn('HANDOFF_RECONCILE', output.getvalue())
+        h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        target = self.root / '.spec-team/HANDOFF.md'; original = target.read_bytes()
+        real_check = h.check_owner; calls = []
+        def changed(*args):
+            result = real_check(*args); calls.append(True)
+            if len(calls) == 2:
+                with (self.root / '.spec-team/run.json').open('ab') as stream: stream.write(b'\n')
+            return result
+        with mock.patch.object(h, 'check_owner', side_effect=changed):
+            with self.assertRaisesRegex(ValueError, 'changed during publication'):
+                h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        self.assertEqual(original, target.read_bytes())
+
+    def test_handoff_does_not_impose_summary_limit_on_run(self):
+        h, r, claim, source = self.handoff_fixture()
+        run = self.root / '.spec-team/run.json'
+        run.write_bytes(run.read_bytes() + b' ' * h.LIMIT)
+        h.publish(self.root, claim['claim_id'], r['run_id'], source)
+        self.assertEqual(r['run_id'], h.check(self.root)['run_id'])
 
     def run_record(self, state='idea'):
         r = {'schema_version':1,'run_id':None,'repository_id':None,'controller_root':None,'owner_claim_id':None,'phase_ids':[],'state':state,'stop_requested':False,'approvals':{'spec':None,'plan':None},'current_phase':None,'completed_phase_reports':[]}
@@ -160,7 +261,8 @@ class Guards(unittest.TestCase):
     def kit(self):
         root=self.root/'kit'; root.mkdir()
         files=['AGENTS.md',str(self.v.SKILL/'SKILL.md'),str(self.v.SKILL/'agents/openai.yaml'),str(self.v.SKILL/'scripts/setup.py'),str(self.v.SKILL/'dependencies.lock.json')]
-        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md')]
+        files += [str(self.v.SKILL/'references'/name) for name in ('workflow.md','linear.md','runtime.md','context.md','handoff.md','operations.md','execution.md')]
+        files += [str(self.v.SKILL/'scripts'/name) for name in ('handoff.py','operations.py')]
         files += [str(self.v.SKILL/'bundles'/(name+'.zip')) for name in ('superpowers','ui-ux-pro-max','ponytail')]
         for filename in files:
             path=root/filename; path.parent.mkdir(parents=True,exist_ok=True); path.write_text('fixture')
@@ -204,6 +306,29 @@ class Guards(unittest.TestCase):
         root=self.kit(); self.assertEqual([],self.v.validate_kit(root))
         p=json.loads((root/self.v.SKILL/'templates/project.json').read_text())
         self.assertIsNone(p['git']['repository_id'])
+
+    def test_economical_role_defaults_and_legacy_defaults_rejected(self):
+        expected = {'relay': ('gpt-6.1-sol', 'medium'),
+                    'atlas': ('gpt-6.1-sol', 'high'),
+                    'lens': ('gpt-6.1-sol', 'high')}
+        for role, pair in expected.items():
+            with self.subTest(role=role):
+                self.assertEqual(pair, self.v.ROLES[role])
+        root = self.kit()
+        for role, old_effort in (('relay', 'high'), ('atlas', 'xhigh'), ('lens', 'xhigh')):
+            path = root / '.codex/agents' / (role + '.toml')
+            saved = path.read_text()
+            path.write_text(saved.replace('model_reasoning_effort = "' + expected[role][1] + '"',
+                                          'model_reasoning_effort = "' + old_effort + '"'))
+            self.assertTrue(any(role + '.toml.model_reasoning_effort' in e
+                                for e in self.v.validate_kit(root)))
+            path.write_text(saved)
+
+    def test_issue_and_dispatch_require_actionable_validation(self):
+        for name in ('linear-issue.md', 'dispatch.md'):
+            for field in ('Pre-push readiness', 'Fixture isolation', 'Failure diagnosis'):
+                with self.subTest(template=name, field=field):
+                    self.assertIn(field, self.v.REQUIRED_TEXT[name])
 
     def test_wrong_role_model_or_effort_and_override_rejected(self):
         root=self.kit()
@@ -316,6 +441,26 @@ class Guards(unittest.TestCase):
         return {'role': role, 'requested_model': 'gpt-6.1-sol',
                 'requested_effort': 'medium', 'observed_model': None,
                 'observed_effort': None, 'worker_id': None, 'retries': 0, 'usage': None}
+
+    def test_dispatch_escalation_requires_reason_scope_and_evidence(self):
+        record = self.run_record('implementing')
+        d = self.dispatch('lens')
+        d.update(requested_effort='xhigh', escalation={
+            'reason': 'Diagnosed cross-tenant authorization ambiguity',
+            'scope': 'Review the changed permission contract',
+            'evidence': 'retained diagnosis reference'})
+        record['current_phase']['dispatches'] = [d]
+        self.assertEqual([], self.v.validate_run(record, self.root))
+        for bad in (None, {}, {'reason': 'risk'},
+                    {'reason': 'risk', 'scope': [], 'evidence': 'reference'}):
+            d['escalation'] = bad
+            self.assertTrue(self.v.validate_run(record, self.root))
+        d['escalation'] = {'reason': 'risk', 'scope': 'contract', 'evidence': 'reference'}
+        for model, effort in (('gpt-6-astra', 'xhigh'), ('gpt-6.1-sol', 'max')):
+            d.update(requested_model=model, requested_effort=effort)
+            self.assertTrue(self.v.validate_run(record, self.root))
+        d.update(role='pixel', requested_model='gpt-6.1-sol', requested_effort='xhigh')
+        self.assertEqual([], self.v.validate_run(record, self.root))
 
     def test_dispatch_role_wrong_json_types_are_field_errors(self):
         record = self.run_record('merging')

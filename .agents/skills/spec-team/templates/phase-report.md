@@ -61,6 +61,11 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 
 ## Delivery observations
 
+Use compact evidence references for same-issue subdelivery refreshes and bounded reviewer scope. Record extra-worker exceptions and actual context/effort observations. If quota continuation was authorized, distinguish remaining allowance, quiescence/checkpoint, actual automation ID/target/reset-plus-buffer/readback and later execution; instructions alone are not a scheduled or successful resume. Preserve unresolved operations and the latest human stop.
+
+- **Execution mode:** <inline or justified delegated exception; actual executor/reviewer and safe transition boundary>
+- **Actual main model:** <observed model/effort or unknown; record dispatched settings separately, no role-name substitution>
+- **Coordination pilot:** <observed wakeups/timeouts/unchanged messages, initial/final context, CI correction rounds, cleanup/helper failures and retained gates; unknowns explicit, no inferred savings>
 - **Elapsed delivery time:** <observed or unavailable>
 - **Equivalent failed attempts and revised diagnosis:** <actual attempts/reasons, or none observed>
 - **Starting failures vs. regressions:** <specific evidence>
@@ -69,6 +74,10 @@ A merge acknowledgement or queued request is not a verified merge. A verified me
 - **Other risk or recovery information:** <concise findings>
 
 ## Handoff and next action
+
+At settled issue boundaries and before authorized transfer, Relay saves existing evidence/run state, then publishes the concise `.spec-team/HANDOFF.md` with `scripts/handoff.py` using [the handoff contract](../references/handoff.md). Carry unresolved older dependencies and uncertain outcomes forward; archive prior summary bytes, never erase underlying reports. A run/claim change invalidates the binding; reconcile before republishing. Record startup elapsed time, historical reads and duplicate investigation here when observed; do not infer savings.
+
+For a fresh Relay, link the approved receipts, run/claim and actual issue/PR/worktree identities. Record current HEAD/base/tree, retained dirty files, workers, in-flight outcomes, unresolved decisions and next action. Quiesce and reconcile before an authorized ownership transfer; a saved report never supplies a live PASS or permission. HANDOFF.md indexes this evidence without copying another full narrative.
 
 - **Linear logical state / actual status:** <actual reference or local draft>
 - **Next approved task/phase:** <actual dependency and owner>

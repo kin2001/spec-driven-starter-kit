@@ -21,6 +21,10 @@ Verify actual resolution, tool versions, configuration names, isolated local ser
 
 ## Authentication and local secrets
 
+In [inline mode](execution.md), main performs assigned Forge/Pixel preparation directly and records it under its sole Relay authority; no preparer subagent is required. Approval, real issue readback, exclusive dependency ownership, service identity, recipe and secret boundaries are unchanged.
+
+Avoid repeated dependency churn: see [exclusive dependency/check reuse](operations.md#dependency-and-check-reuse). Retain meaningful phase ownership when appropriate; dedicated task installations remain isolated. Use existing tested inventories and supported caches, never mutable cross-worker links. The preservation helper is for approved non-secret artifacts, not native sessions or credentials.
+
 Reuse authenticated connectors and supported CLI sessions through official APIs/commands. Agents acting for the same local user reuse that user's supported tool sessions; do not require a separate login per agent. Independent human contributors authenticate with their own accounts. Before service writes, verify required account, organization/project, environment and permissions without printing tokens. A valid login can target the wrong resource. Use supported refresh within authority; expiry, revocation, MFA, SSO or missing scopes may require one focused owner action. Never grant broader scopes automatically or infer permanent access from old evidence. Each desktop host verifies its own sessions.
 
 Prefer native credentials backed by the OS or an approved existing secret manager. If a tool reports plaintext fallback or protection cannot be established, report it and withhold credential persistence until a safe supported method or explicit owner decision is available. Never export browser cookies, copy tokens between worktrees/apps, create a generic login/token file, or put credentials in arguments, remotes, tickets, memory, receipts or reports. Interactive login may update user-scoped tool storage; that specific action does not authorize the kit installer to change global settings.

@@ -136,17 +136,45 @@ Relay may keep only non-secret observations in ignored `.spec-team/local/environ
 | Role | Main responsibility | Requested model / effort |
 | --- | --- | --- |
 | Spark | Product discovery, scope, use cases, acceptance criteria | `gpt-6.1-sol` / `high` |
-| Atlas | Architecture, stack, contracts, security approach, technical plan | `gpt-6.1-sol` / `xhigh` |
-| Relay | Single controller; setup, Linear writes, dispatch, status, ownership | `gpt-6.1-sol` / `high` |
+| Atlas | Architecture, stack, contracts, security approach, technical plan | `gpt-6.1-sol` / `high` |
+| Relay | Single controller; setup, Linear writes, dispatch, status, ownership | `gpt-6.1-sol` / `medium` |
 | Muse | UX flows, visual direction, interaction states, accessibility | `gpt-6-luna` / `max` |
 | Pixel | Frontend implementation and focused checks | `gpt-6-luna` / `max` |
 | Forge | Backend, data, permissions, integrations, focused checks | `gpt-6.1-sol` / `medium` |
-| Lens | Independent specification/code review and selected acceptance | `gpt-6.1-sol` / `xhigh` |
+| Lens | Independent specification/code review and selected acceptance | `gpt-6.1-sol` / `high` |
 | Dock | Integration, combined checks, verified merge and local cleanup | `gpt-6-luna` / `max` |
 
 These are exact requested defaults, not proof of observed routing. Check actual host selectors and report observed model/effort separately. Sol Extra high is the ceiling; escalate only for a diagnosed high-risk or difficult issue, record why, and return routine work to its default. Access errors and missing credentials do not justify a model escalation. Never change global model settings or claim an agent profile overrides the parent session.
 
+## Context, communication, and usage
+
+Use a fresh, focused worker context for each meaningful implementation issue and independent Lens review. Keep related tiny steps together and return fixes to their current owner when practical. Relay receives concise results and evidence references rather than raw logs, screenshots or full worker histories. Read relevant skill sections once per context; recheck changed or lost inputs. Workers inspect connected source as needed; a small prompt must not hide a dependency.
+
+Keep Relay through a coherent phase. At a safe phase checkpoint, use the existing phase report and run record to prepare a fresh controller session if needed. Stop dispatches, quiesce workers, reconcile external actions, preserve WIP and transfer the single claim only with owner authorization. The fresh session verifies actual Git/provider/approval evidence before continuing. A new context does not require a new worktree, issue, PR, login or installation. Never reset during an uncertain migration, merge or provider write; reconcile first. Cross-app transfer remains explicit.
+
+Use short structured messages: issue/status; snapshot and changed files; checks/evidence; blockers/unverified risks; next action. Keep exact identifiers, conditions and negation. Do not shorten a security rule or turn “not tested” into “passed.” No additional Caveman skill is required.
+
+These are host-assisted operating instructions, not an automatic session scheduler, token limiter or guarantee of lower usage. Fresh contexts pay startup costs and can lose cache reuse; excessive restarting can cost more. Profile edits apply only when the host loads them; they do not change the current controller's model. Select the requested model/effort in the host for a fresh controller and observe actual routing; never silently substitute an unsupported setting. Use [the context contract and edge/worst cases](.agents/skills/spec-team/references/context.md).
+
+Existing installations are not overwritten by `setup`. For an upgrade, checkpoint the active project first, back up its workflow files, compare custom changes, then deliberately reconcile the skill references/templates/scripts and role profiles together. Preserve approved product documents, current run records, third-party skill pins, local credentials and product code. Start a fresh chat after reconciliation and use `$spec-team resume` with the retained controller root and checkpoint. A live delivery is needed to measure savings; structural tests do not establish model routing or product acceptance.
+
+Before a delivery push, use the issue/dispatch readiness fields to record affected local checks, fixture isolation, and any missing service environment. Diagnose the observed failure before editing; after two equivalent failed corrections, require a revised diagnosis. CI stages should identify setup, upgrade, database, integration, browser and recovery failures separately while keeping dependent stages ordered, cleanup unconditional and the final full gate intact. A scoped diagnostic is not acceptance. Keep issues current through a concise execution addendum and create a scoped draft PR once a coherent candidate exists. See [verification readiness](.agents/skills/spec-team/references/context.md#verification-readiness-and-failure-handling).
+
+## Focused documents and named workers
+
+Update existing dispatch/report documents instead of creating Markdown for each command or role. Keep one HANDOFF.md startup index (target300-500words, existing16KiBcap): current assignment, ownership/worktree, snapshot/WIP, completed result, remaining criteria, owner holds, uncertain operations, one next action and evidence links. Approved specifications and independent evidence remain separate records; read relevant sections on demand.
+
+Every profile opens with a specific professional responsibility. Worker titles use `Role · ISSUE · Purpose`, such as `Lens · POR-47 · Review`; numbered roles identify distinct assignments, while real session/attempt IDs remain recorded separately. Unsupported naming is reported. Inline responsibilities need no extra terminals.
+
+Relay coordination is included in Spec Team; setup still manages only Superpowers, Ponytail and UI/UX Pro Max. Orca orchestration is not a Codex runtime adapter. Codex CLI terminal execution is an optional delegated path after capability and isolation checks. Unattended completion/wake-up remains experimental until a disposable launch/completion/duplicate/failure/stop/restart pilot passes. This update installs no dispatcher or callback. Keep inline main plus independent Lens as default; parallelize only independent work with capacity and sufficient elapsed-time benefit. More terminals do not guarantee lower token usage. See [terminal safeguards](.agents/skills/spec-team/references/execution.md).
+
 ## Dependencies and host limits
+
+New coherent deliveries use [inline execution](.agents/skills/spec-team/references/execution.md): one main session keeps Relay authority, performs the Forge/Pixel work, then handles the authorized Dock checklist. Lens remains independent for review and selected automated acceptance. Separate implementer/Dock dispatch is an explicitly justified exception, not routine supervision. Main keeps its actual host model/effort; role names do not switch it. Existing delegated tasks transition only at a safe boundary. Record mode and actual setting in the existing assignment/report. This removes routine shadow coordination but cannot eliminate review/CI waiting or guarantee subscription savings.
+
+Spec Team uses milestone-based worker returns, one observer per CI run and compact evidence to reduce repeated supervision. Actual host wait/communication limits still apply; this kit does not install a scheduler or promise idle model calls are eliminated. Standard-library [local operations](.agents/skills/spec-team/references/operations.md) snapshot/check selected file inventories and preserve approved non-secret artifacts without overwriting, moving or deleting source. Current claim, snapshot, review, acceptance and provider merge gates remain required. Trial changes are backed up and removable at a quiet boundary; effectiveness must be measured on real deliveries.
+
+For next-task startup, Spec Team can read one ignored `.spec-team/HANDOFF.md` before the relevant source and current target issue. Relay rotates this short evidence index at settled issue boundaries; the helper binds it to exact saved run bytes and approved documents, retains previous summaries and atomically replaces the visible file. It avoids routinely reopening completed tickets, chats and PR histories. Actual ownership, relevant code changes, current task requirements and merge/cleanup gates still require checks; missing or stale context falls back to reconciliation. See [commands, invalidation cases and reversible-trial rollback](.agents/skills/spec-team/references/handoff.md). This is an optional local cache, not proof of live state or guaranteed token savings. Existing installations require deliberate backed-up reconciliation; setup never overwrites their custom workflow.
 
 The project-local `spec-team` skill is the only workflow entry point. This kit bundles three required MIT-licensed skill families for the roles that use them: Superpowers (`obra/superpowers`, revision `b739a8af570e10a95898f2bdf6cec97467fa6c12`), UI/UX Pro Max (`nextlevelbuilder/ui-ux-pro-max-skill`, revision `56ea9cf174ed86786187daa9de0e6247cb0747e4`), and Ponytail (`DietrichGebert/ponytail`, revision `09c434ab73ca43761c5d8b0c5d341926c2fba710`). A role that needs a missing or conflicting family is not ready until it is resolved. Setup reports the actual installed version/provenance where it can observe it. A present skill is not proof it matches a pin. It never upgrades or overwrites a differing copy. See [third-party notices](THIRD_PARTY_NOTICES.md) and the [dependency lock manifest](.agents/skills/spec-team/dependencies.lock.json) for packaged licenses, checksums, and skill mappings.
 
